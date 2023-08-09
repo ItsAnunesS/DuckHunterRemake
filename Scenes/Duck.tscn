@@ -1,0 +1,78 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Assets/Characters/Duck/Flying/sprite_1.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Characters/Duck/Flying/sprite_2.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Characters/Duck/Up/sprite_1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Characters/Duck/Dying/3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Characters/Duck/Dying/0.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Characters/Duck/Dying/1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Characters/Duck/Dying/2.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/Duck.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Characters/Duck/Up/sprite_2.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Characters/Duck/Up/sprite_0.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Characters/Duck/Flying/sprite_0.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Characters/Duck/Scared/0.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sounds/DuckQuack.wav" type="AudioStream" id=13]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "Dying",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "Flying Idle",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 3 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Flying Up",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "Scared",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 26.7462
+height = 73.6481
+
+[node name="Duck" type="KinematicBody2D"]
+scale = Vector2( 0.8, 0.8 )
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite2D" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Flying Up"
+frame = 2
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -2, 5 )
+rotation = -5.62694
+shape = SubResource( 2 )
+
+[node name="TimerMovimentation" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerChangeAnimation" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerDie" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="TimerQuack" type="Timer" parent="."]
+autostart = true
+
+[node name="AudioDuckQuack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+
+[connection signal="timeout" from="TimerMovimentation" to="." method="_on_TimerMovimentation_timeout"]
+[connection signal="timeout" from="TimerChangeAnimation" to="." method="_on_TimerChangeAnimation_timeout"]
+[connection signal="timeout" from="TimerDie" to="." method="_on_TimerDie_timeout"]
+[connection signal="timeout" from="TimerQuack" to="." method="_on_TimerQuack_timeout"]
