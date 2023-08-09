@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck4dyhklv62gn"]
+
+[ext_resource type="Texture2D" uid="uid://dv55vq4svddor" path="res://Assets/Background/Floor.png" id="1_mcu23"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_botn6"]
+size = Vector2(768.5, 17)
+
+[node name="Floor" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mcu23")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_botn6")

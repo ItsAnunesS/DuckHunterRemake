@@ -1,0 +1,203 @@
+[gd_scene load_steps=24 format=3 uid="uid://dii3v7ca0j1hu"]
+
+[ext_resource type="Texture2D" uid="uid://bbk6oyuteati3" path="res://Assets/Background/Sky.png" id="1_gtneo"]
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_h6aol"]
+[ext_resource type="Texture2D" uid="uid://y102lnji6ugx" path="res://Assets/Background/Trees.png" id="2_65rqo"]
+[ext_resource type="Texture2D" uid="uid://me6b1yapv4lt" path="res://Assets/Characters/Dog/Laugh.png" id="5_dcoso"]
+[ext_resource type="PackedScene" uid="uid://bjrmyjly14x3u" path="res://Scenes/aim.tscn" id="5_e5fbo"]
+[ext_resource type="PackedScene" uid="uid://dgdjpf0qsetqi" path="res://Scenes/top.tscn" id="5_s0vrc"]
+[ext_resource type="PackedScene" uid="uid://ck4dyhklv62gn" path="res://Scenes/floor.tscn" id="6_60ogm"]
+[ext_resource type="Texture2D" uid="uid://beu1alu6fgc46" path="res://Assets/Characters/Dog/Capturing.png" id="6_wrelw"]
+[ext_resource type="Script" path="res://Scripts/LabelPoints.gd" id="9_017vn"]
+[ext_resource type="Texture2D" uid="uid://bgkapi35t56mc" path="res://Assets/GUI/Score.png" id="9_ga7wf"]
+[ext_resource type="FontFile" uid="uid://ce335gqsevpmf" path="res://Assets/Fonts/PressStart2P.ttf" id="10_2c41m"]
+[ext_resource type="Script" path="res://Scripts/LabelWave.gd" id="11_5dqnb"]
+[ext_resource type="AudioStream" uid="uid://bgrks1dddhhvu" path="res://Assets/Sounds/DogCapture.wav" id="13_gvacg"]
+[ext_resource type="AudioStream" uid="uid://bvwo6udluoh06" path="res://Assets/Sounds/DogLaugh.wav" id="14_kp7u7"]
+[ext_resource type="AudioStream" uid="uid://bo6r1r1l8pijy" path="res://Assets/Sounds/NewWave.wav" id="15_x5qep"]
+[ext_resource type="Script" path="res://Scripts/AudioNewWave.gd" id="16_txo5g"]
+[ext_resource type="AudioStream" uid="uid://1g4s75qunl0y" path="res://Assets/Sounds/DuckFloor.wav" id="17_gjxd6"]
+[ext_resource type="AudioStream" uid="uid://cit0d8q17lw3h" path="res://Assets/Sounds/DuckMissed.wav" id="18_4svd6"]
+
+[sub_resource type="Animation" id="Animation_0y5jd"]
+resource_name = "Capture"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DogCaptures:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 2.2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(395, 557), Vector2(395, 433), Vector2(395, 433), Vector2(395, 585)]
+}
+
+[sub_resource type="Animation" id="Animation_oj3xe"]
+resource_name = "DogLaugh"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DogLaugh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.3, 1.9, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(395, 553), Vector2(395, 426), Vector2(395, 426), Vector2(395, 598)]
+}
+
+[sub_resource type="Animation" id="Animation_vb45s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DogCaptures:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(386, 557)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DogLaugh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(386, 553)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q4mgp"]
+_data = {
+"Capture": SubResource("Animation_0y5jd"),
+"DogLaugh": SubResource("Animation_oj3xe"),
+"RESET": SubResource("Animation_vb45s")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_ccc7h"]
+line_spacing = 1.0
+font = ExtResource("10_2c41m")
+font_size = 24
+outline_size = 3
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_h6aol")
+
+[node name="BackgroundSky" type="Sprite2D" parent="."]
+z_index = -3
+texture = ExtResource("1_gtneo")
+centered = false
+
+[node name="BackgroundTrees" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_65rqo")
+centered = false
+
+[node name="DogCaptures" type="Sprite2D" parent="."]
+position = Vector2(386, 557)
+texture = ExtResource("6_wrelw")
+
+[node name="DogLaugh" type="Sprite2D" parent="."]
+position = Vector2(386, 553)
+texture = ExtResource("5_dcoso")
+
+[node name="Aim" parent="." instance=ExtResource("5_e5fbo")]
+position = Vector2(21, 19)
+
+[node name="DuckGenerator" type="Timer" parent="."]
+one_shot = true
+
+[node name="WaitingTime" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="Top" parent="." instance=ExtResource("5_s0vrc")]
+position = Vector2(383, -279)
+
+[node name="Floor" parent="." instance=ExtResource("6_60ogm")]
+position = Vector2(384, 731)
+
+[node name="AnimationDog" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q4mgp")
+}
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD"]
+position = Vector2(169.469, 636)
+scale = Vector2(3.66738, 2.375)
+texture = ExtResource("9_ga7wf")
+
+[node name="LabelTextWave" type="Label" parent="HUD"]
+offset_left = 118.0
+offset_top = 573.0
+offset_right = 214.0
+offset_bottom = 598.0
+text = "Wave"
+label_settings = SubResource("LabelSettings_ccc7h")
+
+[node name="LabelWave" type="Label" parent="HUD"]
+offset_left = 88.0
+offset_top = 602.0
+offset_right = 248.0
+offset_bottom = 627.0
+text = "1
+"
+label_settings = SubResource("LabelSettings_ccc7h")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_5dqnb")
+
+[node name="LabelTextPoints" type="Label" parent="HUD"]
+offset_left = 95.0
+offset_top = 637.0
+offset_right = 239.0
+offset_bottom = 662.0
+text = "Points
+"
+label_settings = SubResource("LabelSettings_ccc7h")
+
+[node name="LabelPoints" type="Label" parent="HUD"]
+offset_left = 53.0
+offset_top = 671.0
+offset_right = 286.0
+offset_bottom = 696.0
+text = "0"
+label_settings = SubResource("LabelSettings_ccc7h")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_017vn")
+
+[node name="AudioDogCapture" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_gvacg")
+
+[node name="AudioDogLaugh" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_kp7u7")
+
+[node name="AudioNewWave" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_x5qep")
+script = ExtResource("16_txo5g")
+
+[node name="AudioDuckFloor" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_gjxd6")
+
+[node name="AudioDuckMissed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_4svd6")
+
+[connection signal="timeout" from="DuckGenerator" to="." method="_on_duck_generator_timeout"]
+[connection signal="timeout" from="WaitingTime" to="." method="_on_waiting_time_timeout"]
+[connection signal="body_entered" from="Top" to="." method="_on_top_body_entered"]
+[connection signal="body_entered" from="Floor" to="." method="_on_floor_body_entered"]
+[connection signal="animation_finished" from="AnimationDog" to="." method="_on_animation_dog_animation_finished"]

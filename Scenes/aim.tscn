@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjrmyjly14x3u"]
+
+[ext_resource type="Texture2D" uid="uid://nignvwlaeym3" path="res://Assets/GUI/Aim.png" id="1_e7oo1"]
+[ext_resource type="Script" path="res://Scripts/Aim.gd" id="1_nw7mc"]
+[ext_resource type="AudioStream" uid="uid://biih8ec06essj" path="res://Assets/Sounds/ShootFire.wav" id="2_8k2i1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8hhsp"]
+size = Vector2(26.6667, 26.6667)
+
+[node name="Aim" type="Area2D"]
+position = Vector2(2, 0)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_nw7mc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_e7oo1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8hhsp")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_8k2i1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgdjpf0qsetqi"]
+
+[ext_resource type="Texture2D" uid="uid://ddy0n0pd65bjq" path="res://Assets/Background/Top.png" id="1_37xaq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1j4g4"]
+size = Vector2(768, 17)
+
+[node name="Top" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_37xaq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_1j4g4")

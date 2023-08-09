@@ -1,0 +1,111 @@
+[gd_scene load_steps=16 format=3 uid="uid://ddch2fh0u6krp"]
+
+[ext_resource type="Script" path="res://Scripts/Duck.gd" id="1_hjy3y"]
+[ext_resource type="Texture2D" uid="uid://dhdfqxov5iom7" path="res://Assets/Characters/Duck/Dying/0.png" id="2_ka5fy"]
+[ext_resource type="Texture2D" uid="uid://b5af21x8t6js5" path="res://Assets/Characters/Duck/Dying/1.png" id="3_kbhnj"]
+[ext_resource type="Texture2D" uid="uid://cpeqnk4v2bh5o" path="res://Assets/Characters/Duck/Dying/2.png" id="4_4en0f"]
+[ext_resource type="Texture2D" uid="uid://d0fhwtxl1fw2u" path="res://Assets/Characters/Duck/Dying/3.png" id="5_ocx32"]
+[ext_resource type="Texture2D" uid="uid://dixuq25hxh7g0" path="res://Assets/Characters/Duck/Flying/sprite_0.png" id="6_2x4sa"]
+[ext_resource type="Texture2D" uid="uid://vel1gni6v0pv" path="res://Assets/Characters/Duck/Flying/sprite_1.png" id="7_qi3oo"]
+[ext_resource type="Texture2D" uid="uid://cv2v6uoae5xng" path="res://Assets/Characters/Duck/Flying/sprite_2.png" id="8_5ceri"]
+[ext_resource type="Texture2D" uid="uid://cfghda2ej4ivc" path="res://Assets/Characters/Duck/Up/sprite_0.png" id="9_275vq"]
+[ext_resource type="Texture2D" uid="uid://c6y763p01g5fm" path="res://Assets/Characters/Duck/Up/sprite_1.png" id="10_f0fr8"]
+[ext_resource type="Texture2D" uid="uid://bpjgdxmg1aylj" path="res://Assets/Characters/Duck/Up/sprite_2.png" id="11_j28fl"]
+[ext_resource type="Texture2D" uid="uid://cbal0hys3l6f4" path="res://Assets/Characters/Duck/Scared/0.png" id="12_3t20c"]
+[ext_resource type="AudioStream" uid="uid://p3m7a33iit5k" path="res://Assets/Sounds/DuckQuack.wav" id="13_spxcg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nc4cx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ka5fy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kbhnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4en0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ocx32")
+}],
+"loop": true,
+"name": &"Dying",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_2x4sa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qi3oo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5ceri")
+}],
+"loop": true,
+"name": &"Flying Idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_275vq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_f0fr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_j28fl")
+}],
+"loop": true,
+"name": &"Flying Up",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_3t20c")
+}],
+"loop": true,
+"name": &"Scared",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ljsn"]
+radius = 55.2456
+height = 141.435
+
+[node name="Duck" type="CharacterBody2D"]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_hjy3y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nc4cx")
+animation = &"Flying Up"
+autoplay = "Flying Up"
+frame = 2
+frame_progress = 0.36131
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 5)
+rotation = 0.598648
+shape = SubResource("CapsuleShape2D_4ljsn")
+
+[node name="Move" type="Timer" parent="."]
+autostart = true
+
+[node name="Animation" type="Timer" parent="."]
+autostart = true
+
+[node name="Die" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="Quack" type="Timer" parent="."]
+autostart = true
+
+[node name="AudioDuckQuack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_spxcg")
+
+[connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
+[connection signal="timeout" from="Animation" to="." method="_on_animation_timeout"]
+[connection signal="timeout" from="Die" to="." method="_on_die_timeout"]
+[connection signal="timeout" from="Quack" to="." method="_on_quack_timeout"]
